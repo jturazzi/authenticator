@@ -3,6 +3,10 @@
   <AppLayout>
     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
       <h1 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ t('admin.title') }}</h1>
+      <Link href="/admin/info" class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        {{ t('info.title') }}
+      </Link>
     </div>
 
     <!-- Desktop table -->

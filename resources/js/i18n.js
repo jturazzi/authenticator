@@ -113,6 +113,23 @@ const messages = {
     'footer.terms': 'CGU',
     'footer.createdBy': 'Créé par',
 
+    // Info page
+    'info.title': 'Informations système',
+    'info.application': 'Application',
+    'info.environment': 'Environnement',
+    'info.statistics': 'Statistiques',
+    'info.appVersion': 'Version Authenticator',
+    'info.phpVersion': 'Version PHP',
+    'info.laravelVersion': 'Version Laravel',
+    'info.server': 'Serveur',
+    'info.database': 'Base de données',
+    'info.cache': 'Cache',
+    'info.session': 'Session',
+    'info.timezone': 'Fuseau horaire',
+    'info.locale': 'Langue',
+    'info.usersCount': 'Utilisateurs',
+    'info.totpCount': 'Comptes TOTP',
+
     // Terms page
     'terms.title': 'Conditions Générales d\'Utilisation',
     'terms.section1Title': 'Objet',
@@ -235,6 +252,23 @@ const messages = {
     // Footer
     'footer.terms': 'Terms',
     'footer.createdBy': 'Created by',
+
+    // Info page
+    'info.title': 'System Information',
+    'info.application': 'Application',
+    'info.environment': 'Environment',
+    'info.statistics': 'Statistics',
+    'info.appVersion': 'Authenticator Version',
+    'info.phpVersion': 'PHP Version',
+    'info.laravelVersion': 'Laravel Version',
+    'info.server': 'Server',
+    'info.database': 'Database',
+    'info.cache': 'Cache',
+    'info.session': 'Session',
+    'info.timezone': 'Timezone',
+    'info.locale': 'Locale',
+    'info.usersCount': 'Users',
+    'info.totpCount': 'TOTP Accounts',
 
     // Terms page
     'terms.title': 'Terms of Use',

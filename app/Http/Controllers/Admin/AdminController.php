@@ -23,6 +23,22 @@ class AdminController extends Controller
         ]);
     }
 
+    public function info()
+    {
+        return Inertia::render('Admin/Info', [
+            'appVersion' => '1.0.0',
+            'phpVersion' => PHP_VERSION,
+            'laravelVersion' => app()->version(),
+            'serverSoftware' => $_SERVER['SERVER_SOFTWARE'] ?? 'CLI',
+            'database' => config('database.default'),
+            'cacheDriver' => config('cache.default'),
+            'sessionDriver' => config('session.driver'),
+            'timezone' => config('app.timezone'),
+            'usersCount' => User::count(),
+            'totpCount' => TotpAccount::count(),
+        ]);
+    }
+
     public function userAccounts(User $user)
     {
         $accounts = $user->totpAccounts()->latest()->get();

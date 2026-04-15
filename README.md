@@ -64,15 +64,8 @@ services:
     volumes:
       - storage-data:/var/www/html/storage
     environment:
-      APP_NAME: Authenticator
-      APP_ENV: production
-      APP_DEBUG: "false"
       APP_URL: https://auth.example.com
       APP_KEY: ""
-      DB_CONNECTION: sqlite
-      SESSION_DRIVER: database
-      CACHE_STORE: database
-      QUEUE_CONNECTION: database
       MICROSOFT_CLIENT_ID: "your-client-id"
       MICROSOFT_CLIENT_SECRET: "your-client-secret"
       MICROSOFT_REDIRECT_URI: "https://auth.example.com/auth/microsoft/callback"
