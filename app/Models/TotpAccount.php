@@ -10,7 +10,6 @@ class TotpAccount extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'issuer',
         'secret',
         'digits',
         'period',
@@ -37,13 +36,11 @@ class TotpAccount extends Model
 
     public function getOtpauthUri(): string
     {
-        $label = $this->issuer
-            ? rawurlencode($this->issuer) . ':' . rawurlencode($this->name)
-            : rawurlencode($this->name);
+        $label = rawurlencode($this->name);
 
         $params = http_build_query([
             'secret' => $this->secret,
-            'issuer' => $this->issuer ?? $this->name,
+            'issuer' => $this->name,
             'algorithm' => strtoupper($this->algorithm),
             'digits' => $this->digits,
             'period' => $this->period,

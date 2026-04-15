@@ -41,7 +41,7 @@
               </span>
             </td>
             <td class="px-6 py-4 text-center">
-              <span v-if="user.is_admin" class="bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-400 text-xs font-semibold px-2.5 py-1 rounded-full">Admin</span>
+              <span v-if="user.is_admin" class="bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-400 text-xs font-semibold px-2.5 py-1 rounded-full">{{ t('admin.admin') }}</span>
               <span v-else class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-semibold px-2.5 py-1 rounded-full">{{ t('admin.user') }}</span>
             </td>
             <td class="px-6 py-4 text-center text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ formatDate(user.created_at) }}</td>
@@ -84,8 +84,8 @@
             </div>
           </div>
           <div class="shrink-0 ml-2">
-            <span v-if="user.is_admin" class="bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-400 text-xs font-semibold px-2 py-0.5 rounded-full">Admin</span>
-            <span v-else class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-semibold px-2 py-0.5 rounded-full">User</span>
+            <span v-if="user.is_admin" class="bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-400 text-xs font-semibold px-2 py-0.5 rounded-full">{{ t('admin.admin') }}</span>
+            <span v-else class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-semibold px-2 py-0.5 rounded-full">{{ t('admin.user') }}</span>
           </div>
         </div>
         <div class="flex items-center justify-between">

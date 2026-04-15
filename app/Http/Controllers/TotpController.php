@@ -40,7 +40,6 @@ class TotpController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'issuer' => 'nullable|string|max:255',
             'secret' => 'nullable|string',
             'otpauth_uri' => 'nullable|string',
         ]);
@@ -50,7 +49,7 @@ class TotpController extends Controller
         if (!empty($validated['otpauth_uri'])) {
             $parsed = $this->parseOtpauthUri($validated['otpauth_uri']);
             if (!$parsed) {
-                return back()->withErrors(['otpauth_uri' => 'URI otpauth invalide.'])->withInput();
+                return back()->withErrors(['otpauth_uri' => 'flash.invalidOtpauth'])->withInput();
             }
 
             $account = Auth::user()->totpAccounts()->create($parsed);
@@ -62,13 +61,12 @@ class TotpController extends Controller
             $account = Auth::user()->totpAccounts()->create([
                 'name' => $validated['name'],
                 'description' => $validated['description'] ?? null,
-                'issuer' => $validated['issuer'],
                 'secret' => $secret,
             ]);
         }
 
         return redirect()->route('dashboard')
-            ->with('success', 'Compte TOTP ajouté avec succès.');
+            ->with('success', 'flash.totpAdded');
     }
 
     public function show(TotpAccount $totp)
@@ -101,13 +99,13 @@ class TotpController extends Controller
 
         if ($totp->locked) {
             return redirect()->route('dashboard')
-                ->with('error', 'Ce compte TOTP est verrouillé et ne peut pas être supprimé.');
+                ->with('error', 'flash.totpLocked');
         }
 
         $totp->delete();
 
         return redirect()->route('dashboard')
-            ->with('success', 'Compte TOTP supprimé.');
+            ->with('success', 'flash.totpDeleted');
     }
 
     public function getCode(TotpAccount $totp)
@@ -139,7 +137,7 @@ class TotpController extends Controller
 
         $parsed = $this->parseOtpauthUri($validated['otpauth_uri']);
         if (!$parsed) {
-            return back()->withErrors(['otpauth_uri' => 'QR code invalide.'])->withInput();
+            return back()->withErrors(['otpauth_uri' => 'flash.invalidQr'])->withInput();
         }
 
         if (!empty($validated['description'])) {
@@ -149,7 +147,7 @@ class TotpController extends Controller
         Auth::user()->totpAccounts()->create($parsed);
 
         return redirect()->route('dashboard')
-            ->with('success', 'Compte TOTP ajouté via QR code.');
+            ->with('success', 'flash.totpAddedScan');
     }
 
     private function parseOtpauthUri(string $uri): ?array
@@ -170,18 +168,15 @@ class TotpController extends Controller
             return null;
         }
 
-        $issuer = $params['issuer'] ?? null;
         $name = $label;
 
         if (str_contains($label, ':')) {
-            [$issuer, $name] = explode(':', $label, 2);
-            $issuer = trim($issuer);
+            [, $name] = explode(':', $label, 2);
             $name = trim($name);
         }
 
         return [
             'name' => $name,
-            'issuer' => $issuer ?? $params['issuer'] ?? null,
             'secret' => strtoupper($params['secret']),
             'digits' => (int) ($params['digits'] ?? 6),
             'period' => (int) ($params['period'] ?? 30),

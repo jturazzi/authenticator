@@ -6,7 +6,14 @@
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center space-x-6">
             <Link href="/dashboard" class="text-xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center space-x-2">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              <svg class="w-12 h-12 rounded-xl" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <rect width="512" height="512" rx="112" fill="#4f46e5"/>
+                <path d="M256 80 L400 152 C400 152 412 320 256 444 C100 320 112 152 112 152 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
+                <path d="M218 248 L218 212 C218 176 294 176 294 212 L294 248" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round"/>
+                <rect x="194" y="246" width="124" height="96" rx="18" fill="#fff"/>
+                <circle cx="256" cy="284" r="15" fill="#4f46e5"/>
+                <rect x="250" y="294" width="12" height="24" rx="6" fill="#4f46e5"/>
+              </svg>
               <span class="hidden sm:inline">Authenticator</span>
             </Link>
             <template v-if="$page.props.auth?.user">
@@ -33,7 +40,7 @@
               <div class="flex items-center space-x-2">
                 <img v-if="$page.props.auth.user.avatar" :src="$page.props.auth.user.avatar" alt="" class="w-8 h-8 rounded-full ring-2 ring-gray-100 dark:ring-gray-800">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $page.props.auth.user.name }}</span>
-                <span v-if="$page.props.auth.user.is_admin" class="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold px-2 py-0.5 rounded-full">Admin</span>
+                <span v-if="$page.props.auth.user.is_admin" class="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold px-2 py-0.5 rounded-full">{{ t('admin.admin') }}</span>
               </div>
               <Link href="/logout" method="post" as="button" class="text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition">
                 {{ t('nav.logout') }}
@@ -54,7 +61,7 @@
             <img v-if="$page.props.auth.user.avatar" :src="$page.props.auth.user.avatar" alt="" class="w-8 h-8 rounded-full ring-2 ring-gray-100 dark:ring-gray-800">
             <div>
               <span class="text-sm font-medium text-gray-700 dark:text-gray-300 block">{{ $page.props.auth.user.name }}</span>
-              <span v-if="$page.props.auth.user.is_admin" class="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold px-2 py-0.5 rounded-full">Admin</span>
+              <span v-if="$page.props.auth.user.is_admin" class="bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 text-xs font-semibold px-2 py-0.5 rounded-full">{{ t('admin.admin') }}</span>
             </div>
           </div>
           <Link href="/dashboard" class="block text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 transition">
@@ -73,11 +80,11 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 w-full">
       <div v-if="$page.props.flash?.success" class="mb-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 px-4 py-3 rounded-lg text-sm flex items-center space-x-2">
         <svg class="w-5 h-5 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-        <span>{{ $page.props.flash.success }}</span>
+        <span>{{ flashMessage($page.props.flash.success) }}</span>
       </div>
       <div v-if="$page.props.flash?.error" class="mb-6 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300 px-4 py-3 rounded-lg text-sm flex items-center space-x-2">
         <svg class="w-5 h-5 text-red-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
-        <span>{{ $page.props.flash.error }}</span>
+        <span>{{ flashMessage($page.props.flash.error) }}</span>
       </div>
       <slot />
     </main>
@@ -105,6 +112,21 @@ import { useI18n } from '@/i18n.js';
 const { t, locale, setLocale } = useI18n();
 const mobileMenuOpen = ref(false);
 const isDark = ref(false);
+
+function flashMessage(msg) {
+  if (!msg) return '';
+  const [key, ...paramParts] = msg.split('|');
+  const params = {};
+  for (const part of paramParts) {
+    const [k, v] = part.split(':');
+    if (k && v !== undefined) {
+      const tv = t(v);
+      params[k] = tv !== v ? tv : v;
+    }
+  }
+  const translated = t(key, params);
+  return translated === key ? msg : translated;
+}
 
 onMounted(() => {
   isDark.value = localStorage.getItem('theme') === 'dark' ||

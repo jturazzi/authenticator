@@ -20,9 +20,11 @@
 
 > 🇫🇷 [Lire en français](README-fr.md)
 
+![Authenticator](./demo.png "Authenticator")
+
 ## Features
 
-- **Microsoft 365 SSO** — Login via Azure AD / Microsoft OAuth
+- **Microsoft 365 SSO** — Login via Microsoft Entra ID / Microsoft OAuth
 - **TOTP Management** — Add accounts manually or by scanning QR codes
 - **QR Code Scanner** — Scan otpauth:// URIs directly from the camera
 - **Admin Panel** — Manage users, roles, and TOTP accounts
@@ -30,7 +32,7 @@
 - **PWA** — Installable as a mobile/desktop app
 - **Dark Mode** — Automatic or manual toggle
 - **Multilingual** — French and English (FR/EN)
-- **SQLite** — Zero-config database, persisted via Docker volume
+- **Multi-Database** — SQLite (default), MySQL, MariaDB, PostgreSQL
 
 ## Tech Stack
 
@@ -41,7 +43,7 @@
 | Auth | Microsoft OAuth via Laravel Socialite |
 | TOTP | PragmaRX Google2FA, chillerlan/php-qrcode |
 | Server | FrankenPHP (Caddy) |
-| Database | SQLite |
+| Database | SQLite (default), MySQL, MariaDB, PostgreSQL |
 | Container | Docker (multi-stage build) |
 
 ## Quick Start (Docker)
@@ -49,7 +51,7 @@
 ### Prerequisites
 
 - Docker & Docker Compose
-- A Microsoft Azure AD app registration ([guide](#microsoft-azure-setup))
+- A Microsoft Microsoft Entra ID app registration ([guide](#microsoft-entra-id-setup))
 
 ### 1. Create a `docker-compose.yml`
 
@@ -89,14 +91,76 @@ volumes:
 |---|---|---|
 | `APP_URL` | Public URL of the application | `https://auth.example.com` |
 | `APP_KEY` | Laravel encryption key (generate below) | `base64:...` |
-| `MICROSOFT_CLIENT_ID` | Azure AD Application (client) ID | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
-| `MICROSOFT_CLIENT_SECRET` | Azure AD Client secret value | `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` |
+| `MICROSOFT_CLIENT_ID` | Microsoft Entra ID Application (client) ID | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
+| `MICROSOFT_CLIENT_SECRET` | Microsoft Entra ID Client secret value | `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` |
 | `MICROSOFT_REDIRECT_URI` | OAuth callback URL | `https://auth.example.com/auth/microsoft/callback` |
-| `MICROSOFT_TENANT_ID` | Azure AD Directory (tenant) ID | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
+| `MICROSOFT_TENANT_ID` | Microsoft Entra ID Directory (tenant) ID | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
 
-> **Important**: `MICROSOFT_REDIRECT_URI` must match exactly the redirect URI configured in Azure AD.
+> **Important**: `MICROSOFT_REDIRECT_URI` must match exactly the redirect URI configured in Microsoft Entra ID.
 
-### 3. Generate APP_KEY
+### 3. Database Configuration
+
+By default, the application uses **SQLite** — no additional setup is needed. The database file is stored in the Docker volume automatically.
+
+To use a different database engine, add the appropriate environment variables to your `docker-compose.yml`:
+
+<details>
+<summary>MySQL</summary>
+
+```yaml
+environment:
+  DB_CONNECTION: mysql
+  DB_HOST: mysql
+  DB_PORT: 3306
+  DB_DATABASE: authenticator
+  DB_USERNAME: authenticator
+  DB_PASSWORD: secret
+```
+
+</details>
+
+<details>
+<summary>MariaDB</summary>
+
+```yaml
+environment:
+  DB_CONNECTION: mariadb
+  DB_HOST: mariadb
+  DB_PORT: 3306
+  DB_DATABASE: authenticator
+  DB_USERNAME: authenticator
+  DB_PASSWORD: secret
+```
+
+</details>
+
+<details>
+<summary>PostgreSQL</summary>
+
+```yaml
+environment:
+  DB_CONNECTION: pgsql
+  DB_HOST: postgres
+  DB_PORT: 5432
+  DB_DATABASE: authenticator
+  DB_USERNAME: authenticator
+  DB_PASSWORD: secret
+```
+
+</details>
+
+> **Note**: When using an external database, make sure the database server is accessible from the container and that the database exists before starting the application. Migrations run automatically on startup.
+
+| Variable | Description | Default |
+|---|---|---|
+| `DB_CONNECTION` | Database driver | `sqlite` |
+| `DB_HOST` | Database server hostname | `127.0.0.1` |
+| `DB_PORT` | Database server port | `3306` / `5432` |
+| `DB_DATABASE` | Database name (or file path for SQLite) | `storage/app/private/database.sqlite` |
+| `DB_USERNAME` | Database username | `root` |
+| `DB_PASSWORD` | Database password | _(empty)_ |
+
+### 4. Generate APP_KEY
 
 ```bash
 docker run --rm ghcr.io/jturazzi/authenticator:latest php artisan key:generate --show
@@ -104,7 +168,7 @@ docker run --rm ghcr.io/jturazzi/authenticator:latest php artisan key:generate -
 
 Copy the output and paste it as the `APP_KEY` value in your `docker-compose.yml`.
 
-### 4. Start
+### 5. Start
 
 ```bash
 docker compose up -d
@@ -112,9 +176,9 @@ docker compose up -d
 
 The first user to log in is automatically assigned the **admin** role.
 
-## Microsoft Azure Setup
+## Microsoft Entra ID Setup
 
-1. Go to [Azure Portal](https://portal.azure.com) → **Azure Active Directory** → **App registrations** → **New registration**
+1. Go to [Microsoft Entra ID](https://entra.microsoft.com) → **Microsoft Entra ID** → **App registrations** → **New registration**
 2. **Name**: `Authenticator` (or your choice)
 3. **Supported account types**: Accounts in this organizational directory only (Single tenant)
 4. **Redirect URI**: Platform `Web` → `https://auth.example.com/auth/microsoft/callback`

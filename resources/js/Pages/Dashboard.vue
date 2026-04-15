@@ -39,7 +39,6 @@
         <div class="flex items-center justify-between mb-3">
           <div class="min-w-0">
             <h3 class="font-semibold text-gray-900 dark:text-white truncate">{{ account.description || account.name }}</h3>
-            <p v-if="account.issuer" class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ account.issuer }}</p>
           </div>
           <div class="flex items-center space-x-1 shrink-0 ml-2">
             <Link @click.stop :href="`/totp/${account.id}`" class="p-1.5 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition" :title="t('dashboard.details')">

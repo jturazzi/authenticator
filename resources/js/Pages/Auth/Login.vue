@@ -4,8 +4,15 @@
     <div class="flex-1 flex items-center justify-center px-4">
       <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full border border-gray-100">
         <div class="text-center mb-8">
-          <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <div class="flex justify-center mb-4">
+            <svg class="w-24 h-24 rounded-2xl" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+              <rect width="512" height="512" rx="112" fill="#4f46e5"/>
+              <path d="M256 80 L400 152 C400 152 412 320 256 444 C100 320 112 152 112 152 Z" fill="none" stroke="#fff" stroke-width="28" stroke-linejoin="round"/>
+              <path d="M218 248 L218 212 C218 176 294 176 294 212 L294 248" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round"/>
+              <rect x="194" y="246" width="124" height="96" rx="18" fill="#fff"/>
+              <circle cx="256" cy="284" r="15" fill="#4f46e5"/>
+              <rect x="250" y="294" width="12" height="24" rx="6" fill="#4f46e5"/>
+            </svg>
           </div>
           <h1 class="text-2xl font-bold text-gray-900 mb-1">{{ t('login.appName') }}</h1>
           <p class="text-gray-500 text-sm">{{ t('login.subtitle') }}</p>

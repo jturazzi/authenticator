@@ -68,7 +68,6 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'issuer' => 'nullable|string|max:255',
             'secret' => 'nullable|string',
         ]);
 
@@ -80,12 +79,11 @@ class AdminController extends Controller
         $user->totpAccounts()->create([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
-            'issuer' => $validated['issuer'],
             'secret' => $secret,
         ]);
 
         return redirect()->route('admin.user.accounts', $user)
-            ->with('success', 'Compte TOTP ajouté pour ' . $user->name);
+            ->with('success', 'flash.totpAddedFor|name:' . $user->name);
     }
 
     public function destroyAccount(TotpAccount $totp)
@@ -94,7 +92,7 @@ class AdminController extends Controller
         $totp->delete();
 
         return redirect()->route('admin.user.accounts', $user)
-            ->with('success', 'Compte TOTP supprimé.');
+            ->with('success', 'flash.totpDeleted');
     }
 
     public function toggleLock(TotpAccount $totp)
@@ -102,20 +100,20 @@ class AdminController extends Controller
         $totp->update(['locked' => !$totp->locked]);
 
         return redirect()->back()
-            ->with('success', $totp->locked ? 'Compte TOTP verrouillé.' : 'Compte TOTP déverrouillé.');
+            ->with('success', $totp->locked ? 'flash.totpLockedToggle' : 'flash.totpUnlockedToggle');
     }
 
     public function destroyUser(User $user)
     {
         if ($user->totpAccounts()->count() > 0) {
             return redirect()->back()
-                ->with('error', 'Impossible de supprimer un utilisateur ayant des comptes TOTP.');
+                ->with('error', 'flash.userDeleteError');
         }
 
         $user->delete();
 
         return redirect()->route('admin.index')
-            ->with('success', 'Utilisateur ' . $user->name . ' supprimé.');
+            ->with('success', 'flash.userDeleted|name:' . $user->name);
     }
 
     public function showAccount(TotpAccount $totp)
@@ -152,7 +150,6 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'issuer' => 'nullable|string|max:255',
             'secret' => 'required|string',
             'digits' => 'required|integer|in:6,8',
             'period' => 'required|integer|min:10|max:120',
@@ -164,7 +161,7 @@ class AdminController extends Controller
         $totp->update($validated);
 
         return redirect()->route('admin.totp.show', $totp)
-            ->with('success', 'Compte TOTP modifié.');
+            ->with('success', 'flash.totpUpdated');
     }
 
     public function toggleAdmin(User $user)
@@ -172,7 +169,7 @@ class AdminController extends Controller
         $user->update(['is_admin' => !$user->is_admin]);
 
         return redirect()->route('admin.index')
-            ->with('success', $user->name . ' est maintenant ' . ($user->is_admin ? 'administrateur' : 'utilisateur'));
+            ->with('success', 'flash.roleChanged|name:' . $user->name . '|role:' . ($user->is_admin ? 'flash.roleAdmin' : 'flash.roleUser'));
     }
 
     private function google2fa(): Google2FA

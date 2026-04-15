@@ -27,13 +27,6 @@
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ t('form.descriptionHelp') }}</p>
           </div>
 
-          <div class="mb-4">
-            <label for="issuer" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ t('form.issuer') }}</label>
-            <input v-model="form.issuer" type="text" id="issuer"
-                   class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800 outline-none transition"
-                   :placeholder="t('form.placeholderIssuer')">
-          </div>
-
           <div class="mb-6">
             <label for="secret" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ t('form.secretOptional') }}</label>
             <input v-model="form.secret" type="text" id="secret"
@@ -65,7 +58,6 @@ const props = defineProps({
 const form = useForm({
   name: '',
   description: '',
-  issuer: '',
   secret: '',
 });
 

@@ -42,7 +42,6 @@ const messages = {
     // Form
     'form.accountName': 'Nom du compte *',
     'form.description': 'Description',
-    'form.issuer': 'Émetteur',
     'form.secretOptional': 'Clé secrète (optionnel)',
     'form.secretRequired': 'Clé secrète *',
     'form.leaveEmpty': 'Laissez vide pour générer automatiquement',
@@ -53,7 +52,6 @@ const messages = {
     'form.algorithm': 'Algorithme',
     'form.placeholderName': 'ex: user@example.com',
     'form.placeholderDesc': 'ex: Google, GitHub, Microsoft...',
-    'form.placeholderIssuer': 'ex: Google, GitHub, Microsoft...',
 
     // Scan
     'scan.title': 'Scanner un QR Code',
@@ -78,6 +76,7 @@ const messages = {
 
     // Admin
     'admin.title': 'Administration des utilisateurs',
+    'admin.admin': 'Admin',
     'admin.user': 'Utilisateur',
     'admin.email': 'Email',
     'admin.totpAccounts': 'Comptes TOTP',
@@ -94,6 +93,23 @@ const messages = {
     'admin.createdAt': 'Création',
     'admin.lastLogin': 'Dernier login',
     'admin.never': 'Jamais',
+
+    // Flash messages
+    'flash.totpAdded': 'Compte TOTP ajouté avec succès.',
+    'flash.totpDeleted': 'Compte TOTP supprimé.',
+    'flash.totpLocked': 'Ce compte TOTP est verrouillé et ne peut pas être supprimé.',
+    'flash.totpAddedScan': 'Compte TOTP ajouté via QR code.',
+    'flash.totpAddedFor': 'Compte TOTP ajouté pour {name}.',
+    'flash.totpLockedToggle': 'Compte TOTP verrouillé.',
+    'flash.totpUnlockedToggle': 'Compte TOTP déverrouillé.',
+    'flash.totpUpdated': 'Compte TOTP modifié.',
+    'flash.userDeleted': 'Utilisateur {name} supprimé.',
+    'flash.userDeleteError': 'Impossible de supprimer un utilisateur ayant des comptes TOTP.',
+    'flash.roleChanged': '{name} est maintenant {role}.',
+    'flash.invalidOtpauth': 'URI otpauth invalide.',
+    'flash.invalidQr': 'QR code invalide.',
+    'flash.roleAdmin': 'administrateur',
+    'flash.roleUser': 'utilisateur',
 
     // Admin UserAccounts
     'userAccounts.title': 'Comptes TOTP de {name}',
@@ -182,7 +198,6 @@ const messages = {
     // Form
     'form.accountName': 'Account name *',
     'form.description': 'Description',
-    'form.issuer': 'Issuer',
     'form.secretOptional': 'Secret key (optional)',
     'form.secretRequired': 'Secret key *',
     'form.leaveEmpty': 'Leave empty to generate automatically',
@@ -193,7 +208,6 @@ const messages = {
     'form.algorithm': 'Algorithm',
     'form.placeholderName': 'e.g.: user@example.com',
     'form.placeholderDesc': 'e.g.: Google, GitHub, Microsoft...',
-    'form.placeholderIssuer': 'e.g.: Google, GitHub, Microsoft...',
 
     // Scan
     'scan.title': 'Scan a QR Code',
@@ -218,6 +232,7 @@ const messages = {
 
     // Admin
     'admin.title': 'User administration',
+    'admin.admin': 'Admin',
     'admin.user': 'User',
     'admin.email': 'Email',
     'admin.totpAccounts': 'TOTP accounts',
@@ -234,6 +249,23 @@ const messages = {
     'admin.createdAt': 'Created',
     'admin.lastLogin': 'Last login',
     'admin.never': 'Never',
+
+    // Flash messages
+    'flash.totpAdded': 'TOTP account added successfully.',
+    'flash.totpDeleted': 'TOTP account deleted.',
+    'flash.totpLocked': 'This TOTP account is locked and cannot be deleted.',
+    'flash.totpAddedScan': 'TOTP account added via QR code.',
+    'flash.totpAddedFor': 'TOTP account added for {name}.',
+    'flash.totpLockedToggle': 'TOTP account locked.',
+    'flash.totpUnlockedToggle': 'TOTP account unlocked.',
+    'flash.totpUpdated': 'TOTP account updated.',
+    'flash.userDeleted': 'User {name} deleted.',
+    'flash.userDeleteError': 'Cannot delete a user with TOTP accounts.',
+    'flash.roleChanged': '{name} is now {role}.',
+    'flash.invalidOtpauth': 'Invalid otpauth URI.',
+    'flash.invalidQr': 'Invalid QR code.',
+    'flash.roleAdmin': 'administrator',
+    'flash.roleUser': 'user',
 
     // Admin UserAccounts
     'userAccounts.title': 'TOTP accounts of {name}',

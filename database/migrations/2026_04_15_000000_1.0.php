@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->timestamp('last_login_at')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -47,7 +45,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('issuer')->nullable();
             $table->text('secret');
             $table->integer('digits')->default(6);
             $table->integer('period')->default(30);
